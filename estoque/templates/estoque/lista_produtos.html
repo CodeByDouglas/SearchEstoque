@@ -1,0 +1,76 @@
+{% extends 'estoque/base.html' %}
+
+{% block content %}
+<div class="max-w-6xl mx-auto bg-white p-8 rounded-xl shadow-2xl transform transition-all hover:shadow-3xl mt-10">
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-8 text-center flex items-center justify-center">
+        <i class="fas fa-list-alt text-blue-600 mr-3"></i> Lista de Produtos
+    </h2>
+
+    <div class="overflow-hidden border border-gray-200 rounded-lg shadow-md">
+        <table class="min-w-full leading-normal">
+            <thead>
+                <tr>
+                    <th
+                        class="px-5 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                        <i class="fas fa-hashtag mr-1 text-gray-400"></i> ID
+                    </th>
+                    <th
+                        class="px-5 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                        <i class="fas fa-tag mr-1 text-gray-400"></i> Nome
+                    </th>
+                    <th
+                        class="px-5 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                        <i class="fas fa-barcode mr-1 text-gray-400"></i> Código
+                    </th>
+                    <th
+                        class="px-5 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                        <i class="fas fa-cubes mr-1 text-gray-400"></i> Quantidade
+                    </th>
+                    <th
+                        class="px-5 py-4 border-b-2 border-gray-200 bg-gray-100 text-left text-xs font-bold text-gray-600 uppercase tracking-wider">
+                        <i class="fas fa-dollar-sign mr-1 text-gray-400"></i> Preço
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for produto in produtos %}
+                <tr class="hover:bg-gray-50 transition duration-150">
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap font-semibold">{{ produto.id }}</p>
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap font-medium">{{ produto.nome }}</p>
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <span class="bg-blue-100 text-blue-800 py-1 px-3 rounded-full text-xs font-semibold">{{ produto.codigo }}</span>
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-gray-900 whitespace-no-wrap">{{ produto.quantidade }}</p>
+                    </td>
+                    <td class="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                        <p class="text-green-600 whitespace-no-wrap font-bold">R$ {{ produto.preco }}</p>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5"
+                        class="px-5 py-10 border-b border-gray-200 bg-white text-sm text-center text-gray-500">
+                        <div class="flex flex-col items-center justify-center">
+                            <i class="fas fa-inbox text-4xl text-gray-300 mb-3"></i>
+                            <p>Nenhum produto cadastrado.</p>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="mt-10 text-center">
+        <a href="{% url 'index' %}"
+            class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition duration-300 hover:underline">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar para Home
+        </a>
+    </div>
+</div>
+{% endblock %}

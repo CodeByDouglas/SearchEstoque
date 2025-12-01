@@ -1,0 +1,128 @@
+{% extends 'estoque/base.html' %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto bg-white p-8 rounded-xl shadow-2xl transform transition-all hover:shadow-3xl">
+    <h2 class="text-3xl font-extrabold text-gray-800 mb-8 text-center flex items-center justify-center">
+        <i class="fas fa-search text-blue-600 mr-3"></i> Buscar Produto
+    </h2>
+
+    <form method="GET" action="{% url 'busca' %}" class="mb-10">
+        <div class="flex flex-col md:flex-row gap-6">
+            <div class="flex-grow relative">
+                <label for="termo" class="block text-gray-700 font-semibold mb-2 ml-1">Nome do Produto:</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-box text-gray-400"></i>
+                    </div>
+                    <input type="text" name="termo" id="termo" value="{{ termo|default:'' }}"
+                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200 shadow-sm"
+                        placeholder="Digite o nome do produto..." required>
+                </div>
+            </div>
+
+            <div class="md:w-1/3">
+                <label for="metodo" class="block text-gray-700 font-semibold mb-2 ml-1">Método de Busca:</label>
+                <div class="relative">
+                    <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                        <i class="fas fa-filter text-gray-400"></i>
+                    </div>
+                    <select name="metodo" id="metodo"
+                        class="w-full pl-10 pr-10 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none transition duration-200 shadow-sm bg-white">
+                        <option value="indexada" {% if metodo == 'indexada' %}selected{% endif %}>Indexada</option>
+                        <option value="sequencial" {% if metodo == 'sequencial' %}selected{% endif %}>Sequencial</option>
+                        <option value="hashmap" {% if metodo == 'hashmap' %}selected{% endif %}>HashMap</option>
+                    </select>
+                    <div class="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none">
+                        <i class="fas fa-chevron-down text-gray-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 text-center">
+            <button type="submit"
+                class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-bold py-3 px-10 rounded-full shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300">
+                <i class="fas fa-search mr-2"></i> Buscar
+            </button>
+        </div>
+    </form>
+
+    {% if termo %}
+    <div class="border-t border-gray-200 pt-8 animate-fade-in-up">
+        <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <i class="fas fa-poll text-blue-600 mr-3"></i> Resultados
+        </h3>
+
+        <div
+            class="bg-gray-50 p-6 rounded-xl mb-6 border border-gray-200 shadow-inner flex justify-center items-center">
+            <p class="text-gray-700 text-lg">
+                <span class="font-bold text-gray-900"><i class="fas fa-clock text-gray-500 mr-2"></i>Tempo:</span>
+                <span class="bg-gray-200 text-gray-800 px-2 py-1 rounded font-mono">{{ tempo_execucao }} ms</span>
+            </p>
+        </div>
+
+        {% if resultado %}
+        <div
+            class="bg-white border-l-8 border-green-500 rounded-lg shadow-md overflow-hidden transform transition hover:scale-[1.01]">
+            <div class="bg-green-50 p-4 border-b border-green-100 flex justify-between items-center">
+                <h4 class="font-bold text-xl text-green-800 flex items-center">
+                    <i class="fas fa-check-circle mr-2"></i> Produto Encontrado
+                </h4>
+                <span class="text-green-600 text-sm font-semibold">ID: {{ resultado.codigo }}</span>
+            </div>
+            <div class="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center md:text-left">
+                    <p class="text-gray-500 text-sm uppercase tracking-wider font-semibold">Nome</p>
+                    <p class="text-gray-900 font-bold text-lg">{{ resultado.nome }}</p>
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="text-gray-500 text-sm uppercase tracking-wider font-semibold">Quantidade</p>
+                    <p class="text-gray-900 font-bold text-lg">{{ resultado.quantidade }} un.</p>
+                </div>
+                <div class="text-center md:text-left">
+                    <p class="text-gray-500 text-sm uppercase tracking-wider font-semibold">Preço</p>
+                    <p class="text-green-600 font-bold text-lg">R$ {{ resultado.preco }}</p>
+                </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="bg-red-50 border-l-8 border-red-500 rounded-lg shadow-md p-6 flex items-center">
+            <div class="text-red-500 text-4xl mr-4">
+                <i class="fas fa-times-circle"></i>
+            </div>
+            <div>
+                <h4 class="font-bold text-xl text-red-800 mb-1">Produto não encontrado</h4>
+                <p class="text-red-700">Não conseguimos localizar nenhum produto com o nome "<span
+                        class="font-bold italic">{{ termo }}</span>".</p>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+    {% endif %}
+
+    <div class="mt-10 text-center">
+        <a href="{% url 'index' %}"
+            class="inline-flex items-center text-blue-600 hover:text-blue-800 font-semibold transition duration-300 hover:underline">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar para Home
+        </a>
+    </div>
+</div>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .animate-fade-in-up {
+        animation: fadeInUp 0.6s ease-out forwards;
+    }
+</style>
+{% endblock %}
