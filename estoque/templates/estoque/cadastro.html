@@ -1,7 +1,8 @@
 {% extends 'estoque/base.html' %}
 
 {% block content %}
-<div class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-2xl transform transition-all hover:shadow-3xl mt-10">
+<div
+    class="max-w-2xl mx-auto bg-white p-8 rounded-xl shadow-2xl transform transition-all hover:shadow-3xl mt-10 fade-in-up">
     <h2 class="text-3xl font-extrabold text-gray-800 mb-8 text-center flex items-center justify-center">
         <i class="fas fa-plus-circle text-green-600 mr-3"></i> Cadastrar Produto
     </h2>
@@ -81,4 +82,23 @@
         </a>
     </div>
 </div>
+
+<style>
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in-up {
+        animation: fadeInUp 0.8s ease-out forwards;
+        opacity: 0;
+    }
+</style>
 {% endblock %}
