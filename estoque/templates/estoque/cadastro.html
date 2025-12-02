@@ -9,13 +9,20 @@
     <form method="POST" action="{% url 'cadastro' %}">
         {% csrf_token %}
 
+        {% if error %}
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6" role="alert">
+            <strong class="font-bold">Erro!</strong>
+            <span class="block sm:inline">{{ error }}</span>
+        </div>
+        {% endif %}
+
         <div class="mb-6">
             <label for="nome" class="block text-gray-700 font-semibold mb-2 ml-1">Nome do Produto:</label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fas fa-tag text-gray-400"></i>
                 </div>
-                <input type="text" name="nome" id="nome"
+                <input type="text" name="nome" id="nome" value="{{ nome|default:'' }}"
                     class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 shadow-sm"
                     placeholder="Ex: Arroz 5kg" required>
             </div>
@@ -27,7 +34,7 @@
                 <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <i class="fas fa-barcode text-gray-400"></i>
                 </div>
-                <input type="text" name="codigo" id="codigo"
+                <input type="text" name="codigo" id="codigo" value="{{ codigo|default:'' }}"
                     class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 shadow-sm"
                     placeholder="Ex: 123456" required>
             </div>
@@ -40,7 +47,7 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-cubes text-gray-400"></i>
                     </div>
-                    <input type="number" name="quantidade" id="quantidade"
+                    <input type="number" name="quantidade" id="quantidade" value="{{ quantidade|default:'' }}"
                         class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 shadow-sm"
                         placeholder="0" required>
                 </div>
@@ -52,7 +59,7 @@
                     <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                         <i class="fas fa-dollar-sign text-gray-400"></i>
                     </div>
-                    <input type="number" step="0.01" name="preco" id="preco"
+                    <input type="number" step="0.01" name="preco" id="preco" value="{{ preco|default:'' }}"
                         class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent transition duration-200 shadow-sm"
                         placeholder="0.00" required>
                 </div>

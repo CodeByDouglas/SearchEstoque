@@ -38,6 +38,14 @@ def busca(request):
                         break
 
         elif metodo == 'hashmap':
+            """ COMO O PYTHON IMPLEMENTA UM HASH MAP (DICIONÁRIO):
+            
+            1. Estrutura Base: O Python aloca um array contíguo de memória (vetor).
+            2. Função de Hash: Ao acessar `dict[chave]`, o Python calcula `hash(chave)`.
+            3. Índice: O valor do hash é transformado em um índice do array.
+            4. Acesso O(1): O programa pula diretamente para esse endereço de memória,
+               sem precisar percorrer a lista (como na busca sequencial)."""
+            
             # Tenta pegar do cache local (variável global)
             mapa_produtos = local_cache.get_hashmap()
             
